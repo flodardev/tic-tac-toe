@@ -62,7 +62,7 @@ const gameController = (() => {
   };
 
   const winCheck = () => {
-    let winner = false;
+    let isWon = false;
 
     const winningRows = [
       [0, 1, 2], // horizontal row
@@ -77,7 +77,7 @@ const gameController = (() => {
 
     const currentBoard = gameBoard.getBoard();
 
-    winner = winningRows.some((row) => {
+    isWon = winningRows.some((row) => {
       const values = [
         currentBoard[row[0]],
         currentBoard[row[1]],
@@ -91,7 +91,7 @@ const gameController = (() => {
       }
     });
 
-    return winner;
+    return isWon;
   };
 
   const checkTie = () => {
