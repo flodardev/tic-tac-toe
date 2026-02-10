@@ -35,5 +35,27 @@
         >
       </p>
     </footer>
+    <dialog id="setup">
+      <h1>Wassup rats &#128000;</h1>
+      <p>this is a tic tac toe game</p>
+      <p>(currently the game support two players only)</p>
+      <form id="setup-form">
+        <fieldset>
+          <legend>Please enter your names</legend>
+          <div class="form-section">
+            <label for="player-one-name">Player 1</label
+            ><input id="player-one-name" type="text" name="playerOneName" />
+          </div>
+          <div class="form-section">
+            <label for="player-two-name">Player 2</label
+            ><input id="player-two-name" type="text" name="playerTwoName" />
+          </div>
+          <button class="dialog-button" type="submit" id="submit-dialog">
+            ok
+          </button>
+        </fieldset>
+      </form>
+      <button id="close-dialog" class="dialog-button">skip</button>
+    </dialog>
   </body>
 </html>

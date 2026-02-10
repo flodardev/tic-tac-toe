@@ -26,7 +26,7 @@ const gameBoard = (() => {
   };
 })();
 
-// The "brains"
+// The "brains" module
 const gameController = (() => {
   const playerOne = createPlayer("Dudu", "X");
   const playerTwo = createPlayer("Bubu", "O");
@@ -159,6 +159,7 @@ const displayController = (() => {
     });
   };
 
+  // Update the screen
   const updateScreen = () => {
     const currentScreen = document.querySelectorAll(".square");
     const currentBoard = gameBoard.getBoard();
@@ -170,7 +171,51 @@ const displayController = (() => {
     updatePlayerCards();
   };
 
-  return { displayScreen };
+  // Init the display and player cards
+  displayScreen();
+  updatePlayerCards();
+
+  return { displayScreen, updatePlayerCards };
+})();
+
+// Display modal module
+const displayDialog = (() => {
+  // do something
+})();
+
+// Handle the form dialog module
+const handleFormDialog = (() => {
+  // form loads when browser refresh
+
+  const dialogSetup = document.querySelector("#setup");
+  dialogSetup.showModal();
+
+  // buttons
+  const closeDialog = document.querySelector("#close-dialog");
+  closeDialog.addEventListener("click", (event) => {
+    event.preventDefault(); // prevents refresh
+    dialogSetup.close();
+  });
+
+  // get setup form data
+  const form = document.querySelector("#setup-form");
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    // get names and update Player names
+    const formData = new FormData(form);
+    if (formData.get("playerOneName") !== "") {
+      gameController.playerOne.name = formData.get("playerOneName");
+    }
+    if (formData.get("playerTwoName") !== "") {
+      gameController.playerTwo.name = formData.get("playerTwoName");
+    }
+    // then displays it
+    displayController.updatePlayerCards();
+
+    // then close the dialog
+    dialogSetup.close();
+  });
 })();
 
 // Factory function for player
@@ -183,6 +228,3 @@ function createPlayer(name, marker) {
 
   return { name, marker, setScore, getScore };
 }
-
-// Game starts
-displayController.displayScreen();
