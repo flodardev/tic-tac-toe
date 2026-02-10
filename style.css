@@ -97,6 +97,10 @@ body {
   border-radius: 10px;
   padding: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .player-one > p:first-child {
@@ -116,6 +120,10 @@ body {
   padding: 0.5rem;
   text-align: end;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .player-two > p:first-child {
@@ -245,4 +253,18 @@ body {
   background-position: 0% 0%; /* Initial position */
   animation: backgroundMove 10s linear infinite alternate; /* Apply the animation */
   overflow: hidden; /* Ensure nothing can scroll out of this container */
+}
+
+/* floating effect of active player */
+.player-float {
+  /* Lifts the card up (-10px on the Y axis) and makes it slightly bigger (1.05 times its size) */
+  transform: translate(-30%, 30%) scale(1.25); /* Increases the shadow to give a sense of elevation */
+  box-shadow: 0 0 20px 10px var(--main-bg-color);
+  z-index: 1;
+}
+
+.player-one-float {
+  transform: translate(30%, 30%) scale(1.25); /* Increases the shadow to give a sense of elevation */
+  box-shadow: 0 0 20px 10px var(--main-bg-color);
+  z-index: 1;
 }

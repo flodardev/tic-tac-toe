@@ -43,20 +43,21 @@ const gameController = (() => {
   const playRound = (index) => {
     if (isGameOver) {
       // game is over
+      isGameOver = false;
+
       return;
     } else if (gameBoard.placeMarker(index, activePlayer.marker)) {
       // check if its a winning move if not then switch players
       if (winCheck()) {
         // winner
-        console.log(`${activePlayer.name} won!`);
-        displayWinnerDialog.winDialog(activePlayer.name);
+        displayWinnerDialog.winDialog(`${activePlayer.name} won!`);
         // update score
         activePlayer.setScore();
 
         isGameOver = true;
       } else if (checkTie()) {
         // its a tie
-        console.log("It's a tie");
+        displayWinnerDialog.winDialog("It's a tie!");
         isGameOver = true;
       } else {
         switchPlayerTurn();
@@ -105,11 +106,19 @@ const gameController = (() => {
     return currentBoard.every((item) => item !== "");
   };
 
+  const changeIsGameOver = () => {
+    console.log("i got run");
+    if (isGameOver) {
+      isGameOver = false;
+    }
+    console.log(isGameOver);
+  };
   return {
     getActivePlayer,
     switchPlayerTurn,
     playRound,
     winCheck,
+    changeIsGameOver,
     playerOne,
     playerTwo,
   };
@@ -141,6 +150,19 @@ const displayController = (() => {
     const playerTwo = document.querySelector(".player-two");
     playerTwo.children[1].textContent = gameController.playerTwo.name;
     playerTwo.children[2].textContent = `Score: ${gameController.playerTwo.getScore()}`;
+
+    // add floating effect to indicate which player's turn
+    console.log(gameController.getActivePlayer().name);
+    if (
+      gameController.getActivePlayer().name ===
+      playerOne.children[1].textContent
+    ) {
+      playerOne.classList.add("player-one-float");
+      playerTwo.classList.remove("player-float");
+    } else {
+      playerTwo.classList.add("player-float");
+      playerOne.classList.remove("player-one-float");
+    }
   };
 
   // create divs for squares of the game board
@@ -180,16 +202,23 @@ const displayController = (() => {
 
 // Display display winner dialog module
 const displayWinnerDialog = (() => {
-  const winDialog = () => {
+  const winDialog = (text) => {
     const winnerDialog = document.querySelector("#result");
     const span = winnerDialog.querySelector("span");
-    span.textContent = `${gameController.getActivePlayer().name} won!`;
+    span.textContent = text;
 
     // show winner modal
     winnerDialog.showModal();
 
     // the clears the board
     gameBoard.resetBoard();
+
+    // close the dialog
+    const closeWinBtn = winnerDialog.querySelector("#close-win");
+    closeWinBtn.addEventListener("click", () => {
+      winnerDialog.close();
+      gameController.changeIsGameOver();
+    });
   };
   return {
     winDialog,
