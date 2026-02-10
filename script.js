@@ -28,8 +28,8 @@ const gameBoard = (() => {
 
 // The "brains"
 const gameController = (() => {
-  const playerOne = createPlayer("Player One", "X");
-  const playerTwo = createPlayer("Player Two", "O");
+  const playerOne = createPlayer("Dudu", "X");
+  const playerTwo = createPlayer("Bubu", "O");
 
   let activePlayer = playerOne;
   let isGameOver = false;
@@ -48,7 +48,11 @@ const gameController = (() => {
       // check if its a winning move if not then switch players
       if (winCheck()) {
         // winner
-        console.log("Win");
+        console.log(`${activePlayer.name} won!`);
+
+        // update score
+        activePlayer.setScore();
+
         isGameOver = true;
       } else if (checkTie()) {
         // its a tie
@@ -106,6 +110,8 @@ const gameController = (() => {
     switchPlayerTurn,
     playRound,
     winCheck,
+    playerOne,
+    playerTwo,
   };
 })();
 
@@ -125,6 +131,17 @@ const displayController = (() => {
       updateScreen();
     }
   });
+
+  // get player cards and update them
+  const updatePlayerCards = () => {
+    const playerOne = document.querySelector(".player-one");
+    playerOne.children[1].textContent = gameController.playerOne.name;
+    playerOne.children[2].textContent = `Score: ${gameController.playerOne.getScore()}`;
+
+    const playerTwo = document.querySelector(".player-two");
+    playerTwo.children[1].textContent = gameController.playerTwo.name;
+    playerTwo.children[2].textContent = `Score: ${gameController.playerTwo.getScore()}`;
+  };
 
   // create divs for squares of the game board
   const displayScreen = () => {
@@ -148,6 +165,9 @@ const displayController = (() => {
     currentScreen.forEach((item, index) => {
       item.textContent = currentBoard[index];
     });
+
+    // update player cards
+    updatePlayerCards();
   };
 
   return { displayScreen };
