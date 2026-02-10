@@ -40,17 +40,19 @@ const gameController = (() => {
     activePlayer = activePlayer === playerOne ? playerTwo : playerOne;
   };
 
-  const playRound = () => {
+  const playRound = (index) => {
     if (isGameOver) {
       // game is over
       return;
-    } else if (gameBoard.placeMarker(index, marker)) {
+    } else if (gameBoard.placeMarker(index, activePlayer.marker)) {
       // check if its a winning move if not then switch players
       if (winCheck()) {
         // winner
+        console.log("Win");
         isGameOver = true;
       } else if (checkTie()) {
         // its a tie
+        console.log("It's a tie");
         isGameOver = true;
       } else {
         switchPlayerTurn();
@@ -109,7 +111,46 @@ const gameController = (() => {
 
 // Display controller module
 const displayController = (() => {
-  return {};
+  const gameContainer = document.querySelector(".game-container");
+
+  // add event delegation
+  gameContainer.addEventListener("click", (event) => {
+    if (event.target && event.target.matches(".square")) {
+      const index = +event.target.dataset.index;
+
+      // pass it to gamecontroller.playround
+      gameController.playRound(index, gameController.getActivePlayer());
+
+      // update screen
+      updateScreen();
+    }
+  });
+
+  // create divs for squares of the game board
+  const displayScreen = () => {
+    const currentBoard = gameBoard.getBoard();
+    currentBoard.forEach((item, index) => {
+      const square = document.createElement("div");
+      square.textContent = item;
+      square.classList.add("square");
+
+      // use data attributes to "link" to html
+      square.setAttribute("data-index", index);
+
+      // append to the game container
+      gameContainer.append(square);
+    });
+  };
+
+  const updateScreen = () => {
+    const currentScreen = document.querySelectorAll(".square");
+    const currentBoard = gameBoard.getBoard();
+    currentScreen.forEach((item, index) => {
+      item.textContent = currentBoard[index];
+    });
+  };
+
+  return { displayScreen };
 })();
 
 // Factory function for player
@@ -123,7 +164,5 @@ function createPlayer(name, marker) {
   return { name, marker, setScore, getScore };
 }
 
-gameBoard.placeMarker(0, "X");
-gameBoard.placeMarker(1, "X");
-gameBoard.placeMarker(2, "X");
-console.log(gameController.winCheck());
+// Game starts
+displayController.displayScreen();
