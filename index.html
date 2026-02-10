@@ -10,14 +10,19 @@
   </head>
   <body>
     <header class="header">
-      <h1>&#x2B55;&#x274C;Tic-Tac-Toe&#x274C;&#x2B55;</h1>
+      <h1>
+        &#128000;&#128000;&#x2B55;&#x274C;Tic-Tac-Toe&#x274C;&#x2B55;&#128000;&#128000;
+      </h1>
     </header>
-    <main class="main">
+    <main class="main moving-background">
       <div class="game-header">
         <div class="player-one">
           <p>Player One &#x274C;</p>
           <p>Player One Name</p>
           <p>Score:</p>
+        </div>
+        <div class="header-button-container">
+          <button class="header-button" id="reset-button">Reset</button>
         </div>
         <div class="player-two">
           <p>&#x2B55; Player Two</p>
@@ -56,6 +61,9 @@
         </fieldset>
       </form>
       <button id="close-dialog" class="dialog-button">skip</button>
+    </dialog>
+    <dialog id="result" closedby="any">
+      <h1>&#128000;&#128000;<span>Someone won!</span>&#128000;&#128000;</h1>
     </dialog>
   </body>
 </html>

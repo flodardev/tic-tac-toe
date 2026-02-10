@@ -48,10 +48,50 @@ body {
 
 .game-header {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   justify-content: space-between;
   padding: 0.2rem;
 }
+
+/* Header buttons */
+.header-button-container {
+  display: grid;
+  place-self: center;
+  gap: 1rem;
+}
+
+.header-button {
+  background-image: linear-gradient(
+    45deg,
+    magenta,
+    rebeccapurple,
+    dodgerblue,
+    green
+  );
+
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin-top: 0.2rem;
+  font-size: larger;
+  /* Apply transition to all changes over 0.3 seconds with an ease timing function */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.header-button:hover {
+  /* Lifts the card up (-10px on the Y axis) and makes it slightly bigger (1.05 times its size) */
+  transform: translateY(-2px) scale(1.05);
+  /* Increases the shadow to give a sense of elevation */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.header-button:active {
+  transform: translateY(2px) scale(0.98); /* Moves button down slightly and shrinks */
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.24); /* Removes shadow to complete the "pressed" look */
+}
+
 .player-one {
   background-color: var(--player-bg-color);
   border-radius: 10px;
@@ -168,7 +208,6 @@ body {
     green
   );
 
-  border: none;
   border-radius: 10px;
   color: white;
   cursor: pointer;
@@ -194,4 +233,16 @@ body {
 
 #close-dialog {
   margin-top: 1rem;
+}
+
+/* Moving background */
+.moving-background {
+  width: 100%;
+  height: 100vh; /* Viewport height */
+  background-image: url("./images/rat-dance.gif");
+  background-repeat: repeat;
+  background-size: auto 50%; /* Adjust size as needed, e.g., wider than the container to allow movement */
+  background-position: 0% 0%; /* Initial position */
+  animation: backgroundMove 10s linear infinite alternate; /* Apply the animation */
+  overflow: hidden; /* Ensure nothing can scroll out of this container */
 }

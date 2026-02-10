@@ -49,7 +49,7 @@ const gameController = (() => {
       if (winCheck()) {
         // winner
         console.log(`${activePlayer.name} won!`);
-
+        displayWinnerDialog.winDialog(activePlayer.name);
         // update score
         activePlayer.setScore();
 
@@ -178,12 +178,25 @@ const displayController = (() => {
   return { displayScreen, updatePlayerCards };
 })();
 
-// Display modal module
-const displayDialog = (() => {
-  // do something
+// Display display winner dialog module
+const displayWinnerDialog = (() => {
+  const winDialog = () => {
+    const winnerDialog = document.querySelector("#result");
+    const span = winnerDialog.querySelector("span");
+    span.textContent = `${gameController.getActivePlayer().name} won!`;
+
+    // show winner modal
+    winnerDialog.showModal();
+
+    // the clears the board
+    gameBoard.resetBoard();
+  };
+  return {
+    winDialog,
+  };
 })();
 
-// Handle the form dialog module
+// Display and handle the setup form dialog module and reset button
 const handleFormDialog = (() => {
   // form loads when browser refresh
 
@@ -215,6 +228,12 @@ const handleFormDialog = (() => {
 
     // then close the dialog
     dialogSetup.close();
+  });
+
+  // reset button to reset the game
+  const resetButton = document.querySelector("#reset-button");
+  resetButton.addEventListener("click", () => {
+    window.location.reload();
   });
 })();
 
